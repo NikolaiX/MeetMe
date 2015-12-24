@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
     public RadioGroup radioGroupTimePeriod;
 
     public View timePeriodDetails;
+    public View specificDateTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,8 @@ public class MainActivity extends ActionBarActivity {
 
         hasTime = (CheckBox)findViewById(R.id.checkBoxSendTime);
         radioGroupTimePeriod = (RadioGroup)findViewById(R.id.radioButtonTimePeriod);
-        timePeriodDetails = findViewById(R.id.timePeriodDetails);
+        timePeriodDetails = findViewById(R.id.layoutTimePeriodDetails);
+        specificDateTime = findViewById(R.id.layoutSpecifyTimeDate);
     }
 
     @Override
@@ -66,12 +68,12 @@ public class MainActivity extends ActionBarActivity {
             timePeriodDetails.setVisibility(View.GONE);
         }
     }
-    public void toggleTimePeriod(View view){
+    public void toggleTimePeriodNowOrSpecify(View view){
         if(radioGroupTimePeriod.getCheckedRadioButtonId()==0){
-
+            specificDateTime.setVisibility(View.GONE);
         }
-        else{
-
+        else {
+            specificDateTime.setVisibility(View.VISIBLE);
         }
     }
 }
