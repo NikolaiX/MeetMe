@@ -36,20 +36,23 @@
             <RadioGroup
                 android:id="@+id/radioButtonTimePeriod"
                 android:layout_width="163dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false">
 
                 <RadioButton
                     android:id="@+id/radioNow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Now"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:onClick="setTimePeriodToNow" />
 
                 <RadioButton
                     android:id="@+id/radioSpecific"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Choose a time" />
+                    android:text="Choose a time"
+                    android:onClick="setTimePeriodToSpecific" />
 
             </RadioGroup>
 
@@ -59,11 +62,12 @@
                 android:layout_height="match_parent"
                 android:id="@+id/layoutSpecifyTimeDate">
 
-                <EditText
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textboxDateTime"
-                    android:text="Time / Date field" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Date / Time Field"
+                    android:id="@+id/textViewDateTime" />
 
                 <LinearLayout
                     android:orientation="horizontal"
