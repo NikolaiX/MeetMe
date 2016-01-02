@@ -15,6 +15,14 @@
         android:weightSum="1"
         android:id="@+id/linearLayout">
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/textBoxDetails"
+            android:text="Enter Event Details" />
+
         <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,18 +101,22 @@
 
         </LinearLayout>
 
-        <CheckedTextView
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send Location"
-            android:id="@+id/checkboxLocation"
-            android:enabled="false"
-            android:checked="false"
-            android:visibility="visible"
-            android:layout_marginRight="42dp"
-            android:layout_marginEnd="42dp"
-            android:layout_marginTop="72dp" />
+            android:id="@+id/checkBoxSendLocation"
+            android:checked="false" />
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Contacts"
+        android:id="@+id/buttonSelectContacts"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

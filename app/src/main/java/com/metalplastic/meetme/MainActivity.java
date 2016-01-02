@@ -29,7 +29,6 @@ public class MainActivity extends ActionBarActivity {
 
     public View timePeriodDetails;
     public View specificDateTime;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
