@@ -16,12 +16,13 @@
         android:id="@+id/linearLayout">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/textBoxDetails"
-            android:text="Enter Event Details" />
+            android:text="Enter Event Details"
+            android:layout_weight="0.28" />
 
         <CheckBox
             android:layout_width="match_parent"
@@ -107,6 +108,29 @@
             android:text="Send Location"
             android:id="@+id/checkBoxSendLocation"
             android:checked="false" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutLocationDetails"
+            android:visibility="visible"
+            android:layout_marginLeft="30dp" >
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share written address"
+                android:id="@+id/checkBoxWrittenAddress"
+                android:checked="false" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send Google Maps URL"
+                android:id="@+id/checkBoxSendURL"
+                android:checked="false" />
+        </LinearLayout>
 
     </LinearLayout>
 
