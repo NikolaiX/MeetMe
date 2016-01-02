@@ -3,6 +3,7 @@ package com.metalplastic.meetme;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
@@ -17,7 +18,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -29,6 +32,8 @@ public class MainActivity extends ActionBarActivity {
 
     public View timePeriodDetails;
     public View specificDateTime;
+
+    public TextView timeString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
         radioGroupTimePeriod = (RadioGroup)findViewById(R.id.radioButtonTimePeriod);
         timePeriodDetails = findViewById(R.id.layoutTimePeriodDetails);
         specificDateTime = findViewById(R.id.layoutSpecifyTimeDate);
+        timeString = (TextView)findViewById(R.id.textViewDateTime);
     }
 
     @Override
@@ -71,6 +77,26 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    public void changeDate(View view){
+
+        TimePickerDialog tpd = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                timeString.setText(String.format("Date, %d:%d",hourOfDay,minute));
+            }
+        },
+        getCurrentTimeHour(),getCurrentTimeMinute(),false);
+
+        tpd.show();
+    }
+    public int getCurrentTimeHour(){
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.HOUR);
+    }
+    public int getCurrentTimeMinute(){
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.MINUTE);
+    }
     public void setTimePeriodToNow(View view){
         specificDateTime.setVisibility(View.GONE);
     }
