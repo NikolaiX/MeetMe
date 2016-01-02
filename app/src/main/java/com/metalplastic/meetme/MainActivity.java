@@ -1,6 +1,7 @@
 package com.metalplastic.meetme;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -33,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
     public View timePeriodDetails;
     public View specificDateTime;
 
-    public TextView timeString;
+    public TextView TextViewTimeDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
         radioGroupTimePeriod = (RadioGroup)findViewById(R.id.radioButtonTimePeriod);
         timePeriodDetails = findViewById(R.id.layoutTimePeriodDetails);
         specificDateTime = findViewById(R.id.layoutSpecifyTimeDate);
-        timeString = (TextView)findViewById(R.id.textViewDateTime);
+        TextViewTimeDate = (TextView)findViewById(R.id.textViewDateTime);
     }
 
     @Override
@@ -77,17 +79,27 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void changeDate(View view){
+    public void changeTime(View view){
 
         TimePickerDialog tpd = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timeString.setText(String.format("Date, %d:%d",hourOfDay,minute));
+                TextViewTimeDate.setText(String.format("Date, %d:%d", hourOfDay, minute));
             }
-        },
-        getCurrentTimeHour(),getCurrentTimeMinute(),false);
+        }, getCurrentTimeHour(),getCurrentTimeMinute(),false);
 
         tpd.show();
+    }
+    public void changeDate(View view){
+
+        DatePickerDialog dpd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                TextViewTimeDate.setText(String.format("%d/%d/%d, TIME",dayOfMonth,monthOfYear,year));
+            }
+        }, getCurrentDateYear(),getCurrentDateMonth(),getCurrentDateDay());
+
+        dpd.show();
     }
     public int getCurrentTimeHour(){
         Calendar c = Calendar.getInstance();
@@ -96,6 +108,18 @@ public class MainActivity extends ActionBarActivity {
     public int getCurrentTimeMinute(){
         Calendar c = Calendar.getInstance();
         return c.get(Calendar.MINUTE);
+    }
+    public int getCurrentDateYear(){
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.YEAR);
+    }
+    public int getCurrentDateMonth(){
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.MONTH);
+    }
+    public int getCurrentDateDay(){
+        Calendar c = Calendar.getInstance();
+        return c.get(Calendar.DAY_OF_MONTH);
     }
     public void setTimePeriodToNow(View view){
         specificDateTime.setVisibility(View.GONE);
