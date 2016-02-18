@@ -1,5 +1,6 @@
 package com.metalplastic.meetme;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Notification;
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -29,6 +38,7 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     public int notifID=0;
     public CheckBox hasTime;
+    public CheckBox hasLocation;
 
     public RadioGroup radioGroupTimePeriod;
 
@@ -42,12 +52,18 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         hasTime = (CheckBox)findViewById(R.id.checkBoxSendTime);
+        hasLocation = (CheckBox)findViewById(R.id.checkBoxSendLocation);
         radioGroupTimePeriod = (RadioGroup)findViewById(R.id.radioButtonTimePeriod);
         timePeriodDetails = findViewById(R.id.layoutTimePeriodDetails);
         specificDateTime = findViewById(R.id.layoutSpecifyTimeDate);
         TextViewTimeDate = (TextView)findViewById(R.id.textViewDateTime);
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.i("Connection",String.valueOf(GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)));
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -72,9 +88,22 @@ public class MainActivity extends ActionBarActivity {
 
     public void toggleIncludeTime(View view){
         if( hasTime.isChecked()) {
+            Log.i("UI","Time checkbox has been checked");
             timePeriodDetails.setVisibility(View.VISIBLE);
         }
         else {
+            Log.i("UI", "Time checkbox has been unchecked");
+            timePeriodDetails.setVisibility(View.GONE);
+        }
+    }
+    public void toggleIncludeLocation(View view){
+        if( hasLocation.isChecked()) {
+            Log.i("UI", "Location checkbox has been checked");
+            selectLocationDialog();
+            timePeriodDetails.setVisibility(View.VISIBLE);
+        }
+        else {
+            Log.i("UI", "Location checkbox has been unchecked");
             timePeriodDetails.setVisibility(View.GONE);
         }
     }
@@ -126,5 +155,20 @@ public class MainActivity extends ActionBarActivity {
     }
     public void setTimePeriodToSpecific(View view){
         specificDateTime.setVisibility(View.VISIBLE);
+    }
+    public void selectLocationDialog(){
+        PlacePicker.IntentBuilder mPicker = new PlacePicker.IntentBuilder();
+        Log.i("UI", "Location Picker has been created");
+
+        try {
+            startActivityForResult(mPicker.build(this), 1);
+            Log.i("UI", "Location Picker Activity has Completed");
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+            Log.e("Exception", "Repairable Exception", e);
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+            Log.e("Exception", "Google Play Services not available Exception", e);
+        }
     }
 }

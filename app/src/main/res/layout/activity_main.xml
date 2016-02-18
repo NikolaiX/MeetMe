@@ -109,7 +109,8 @@
             android:layout_height="wrap_content"
             android:text="Send Location"
             android:id="@+id/checkBoxSendLocation"
-            android:checked="false" />
+            android:checked="false"
+            android:onClick="toggleIncludeLocation" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -144,5 +145,4 @@
         android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
 </RelativeLayout>
