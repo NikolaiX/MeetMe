@@ -1,4 +1,4 @@
-package com.metalplastic.meetme;
+package com.metalplastic.meetme.Data;
 
 import android.graphics.Point;
 import android.provider.ContactsContract;
