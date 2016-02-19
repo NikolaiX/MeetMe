@@ -1,5 +1,7 @@
 package com.metalplastic.meetme;
 
+import com.metalplastic.meetme.Data.Meeting;
+
 import java.sql.Time;
 /**
  * Created by NikolaiA on 28 Nov 15.
