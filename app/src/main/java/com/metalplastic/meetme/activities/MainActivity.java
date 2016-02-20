@@ -1,4 +1,4 @@
-package com.metalplastic.meetme;
+package com.metalplastic.meetme.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,6 +30,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.metalplastic.meetme.R;
 
 import java.util.Calendar;
 import java.util.List;

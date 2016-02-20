@@ -1,8 +1,6 @@
-package com.metalplastic.meetme.MapServices;
+package com.metalplastic.meetme.mapservices;
 
-import android.util.Log;
-
-import com.metalplastic.meetme.Interfaces.IWebMapProvider;
+import com.metalplastic.meetme.interfaces.IWebMapProvider;
 import com.metalplastic.meetme.R;
 
 

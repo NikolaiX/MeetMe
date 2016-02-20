@@ -1,12 +1,10 @@
-package com.metalplastic.meetme.MapServices;
+package com.metalplastic.meetme.mapservices;
 
-import com.metalplastic.meetme.Interfaces.IWebMapProvider;
+import com.metalplastic.meetme.interfaces.IWebMapProvider;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by nikal on 14 Feb 16.

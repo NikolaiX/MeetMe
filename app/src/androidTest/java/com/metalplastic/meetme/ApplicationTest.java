@@ -3,11 +3,6 @@ package com.metalplastic.meetme;
 import android.app.Application;
 import android.test.ApplicationTestCase;
 
-import com.metalplastic.meetme.Interfaces.IWebMapProvider;
-import com.metalplastic.meetme.MapServices.MapServiceGoogle;
-
-import junit.framework.Assert;
-
 import org.junit.Test;
 
 

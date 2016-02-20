@@ -1,6 +1,6 @@
-package com.metalplastic.meetme.Interfaces;
+package com.metalplastic.meetme.interfaces;
 
-import com.metalplastic.meetme.Data.Meeting;
+import com.metalplastic.meetme.data.Meeting;
 
 /**
  * Created by NikolaiA on 30 Nov 15.

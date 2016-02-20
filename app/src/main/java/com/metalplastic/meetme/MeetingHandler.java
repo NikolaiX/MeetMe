@@ -1,6 +1,6 @@
 package com.metalplastic.meetme;
 
-import com.metalplastic.meetme.Data.Meeting;
+import com.metalplastic.meetme.data.Meeting;
 
 import java.util.List;
 

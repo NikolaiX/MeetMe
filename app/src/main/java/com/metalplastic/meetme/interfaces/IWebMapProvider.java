@@ -1,4 +1,4 @@
-package com.metalplastic.meetme.Interfaces;
+package com.metalplastic.meetme.interfaces;
 
 /**
  * Created by nikal on 14 Feb 16.
