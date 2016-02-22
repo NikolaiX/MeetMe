@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Developer Settings"
+        android:key="pref_developer_group">
+        <Preference
+            android:key="signatureCopy"
+            android:title="Copy app signature to clipboard"
+            android:summary="App signature required by Google Maps server for communication"/>
+    </PreferenceCategory>
+</PreferenceScreen>
