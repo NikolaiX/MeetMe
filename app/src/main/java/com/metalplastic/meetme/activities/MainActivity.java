@@ -24,13 +24,16 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.metalplastic.meetme.MeetingBuilder;
 import com.metalplastic.meetme.R;
 
 import java.util.Calendar;
@@ -38,20 +41,28 @@ import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
+    private static final int PLACE_PICKER_REQUEST = 1;
     public int notifID=0;
-    public CheckBox hasTime;
-    public CheckBox hasLocation;
 
-    public RadioGroup radioGroupTimePeriod;
+    public CheckBox hasLocation;
+    public CheckBox hasWrittenAddress;
 
     public View timePeriodDetails;
     public View specificDateTime;
+    public CheckBox hasTime;
+    public RadioGroup radioGroupTimePeriod;
+
+
 
     public TextView TextViewTimeDate;
+
+    MeetingBuilder meetingBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        meetingBuilder = new MeetingBuilder();
 
         hasTime = (CheckBox)findViewById(R.id.checkBoxSendTime);
         hasLocation = (CheckBox)findViewById(R.id.checkBoxSendLocation);
@@ -59,12 +70,13 @@ public class MainActivity extends ActionBarActivity {
         timePeriodDetails = findViewById(R.id.layoutTimePeriodDetails);
         specificDateTime = findViewById(R.id.layoutSpecifyTimeDate);
         TextViewTimeDate = (TextView)findViewById(R.id.textViewDateTime);
+        hasWrittenAddress = (CheckBox)findViewById(R.id.checkBoxWrittenAddress);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        Log.i("Connection",String.valueOf(GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)));
+        Log.i("Connection", String.valueOf(GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,7 +103,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void toggleIncludeTime(View view){
         if( hasTime.isChecked()) {
-            Log.i("UI","Time checkbox has been checked");
+            Log.i("UI", "Time checkbox has been checked");
             timePeriodDetails.setVisibility(View.VISIBLE);
         }
         else {
@@ -159,19 +171,60 @@ public class MainActivity extends ActionBarActivity {
     public void setTimePeriodToSpecific(View view){
         specificDateTime.setVisibility(View.VISIBLE);
     }
+
     public void selectLocationDialog(){
         PlacePicker.IntentBuilder mPicker = new PlacePicker.IntentBuilder();
         Log.i("UI", "Location Picker has been created");
 
         try {
-            startActivityForResult(mPicker.build(this), 1);
+            startActivityForResult(mPicker.build(this), PLACE_PICKER_REQUEST);
             Log.i("UI", "Location Picker Activity has Completed");
-        } catch (GooglePlayServicesRepairableException e) {
+        }
+        catch (GooglePlayServicesRepairableException e) {
             e.printStackTrace();
             Log.e("Exception", "Repairable Exception", e);
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
             Log.e("Exception", "Google Play Services not available Exception", e);
         }
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+
+                Place newPlace = PlacePicker.getPlace(this, data);
+                meetingBuilder.setPlace(newPlace);
+
+                if(newPlace.getAddress().length() == 0) {
+                    Log.i("Information", "No written address included in place");
+                    disableWrittenAddress();
+                }
+                else {
+                    Log.i("Information", "Address recorded: '" + newPlace.getAddress() + "' ");
+                    enableWrittenAddress();
+                }
+
+                String toastMsg = String.format("Place: %s", newPlace.getAddress());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+    private void disableWrittenAddress(){
+        hasWrittenAddress.setChecked(false);
+        hasWrittenAddress.setEnabled(false);
+        meetingBuilder.excludeWrittenAddress();
+    }
+    private void enableWrittenAddress(){
+        hasWrittenAddress.setChecked(true);
+        hasWrittenAddress.setEnabled(true);
+        meetingBuilder.includeWrittenAddress();
+    }
+    public void toggleWrittenAddress(View view){
+        if( hasWrittenAddress.isChecked() )
+            meetingBuilder.includeWrittenAddress();
+        else
+            meetingBuilder.excludeWrittenAddress();
+
     }
 }
